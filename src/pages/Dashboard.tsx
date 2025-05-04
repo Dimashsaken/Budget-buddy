@@ -5,6 +5,7 @@ import { calculateBalance } from '../utils/helpers';
 import BalanceCard from '../components/dashboard/BalanceCard';
 import RecentTransactions from '../components/dashboard/RecentTransactions';
 import ExpensesByCategoryChart from '../components/dashboard/ExpensesByCategoryChart';
+import ExpensesByPieChart from '../components/dashboard/ExpensesByPieChart';
 import IncomeVsExpenseChart from '../components/dashboard/IncomeVsExpenseChart';
 
 const Dashboard: React.FC = () => {
@@ -55,15 +56,21 @@ const Dashboard: React.FC = () => {
           </div>
           
           {/* Secondary stats */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-1">
               <RecentTransactions 
                 transactions={sortedTransactions} 
                 categories={state.categories}
               />
             </div>
-            <div>
+            <div className="lg:col-span-1">
               <ExpensesByCategoryChart 
+                transactions={state.transactions}
+                categories={state.categories}
+              />
+            </div>
+            <div className="lg:col-span-1">
+              <ExpensesByPieChart 
                 transactions={state.transactions}
                 categories={state.categories}
               />
