@@ -45,35 +45,36 @@ const Dashboard: React.FC = () => {
         </div>
       ) : (
         <div>
-          {/* Main stats */}
+          {/* First row: Balance and Recent Transactions */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             <div className="lg:col-span-1">
+              {/* Balance Card */}
               <BalanceCard balance={balance} />
+              
+              {/* Recent Transactions - placed right under balance */}
+              <div className="mt-6">
+                <RecentTransactions 
+                  transactions={sortedTransactions} 
+                  categories={state.categories}
+                />
+              </div>
             </div>
+            
+            {/* Charts */}
             <div className="lg:col-span-2">
               <IncomeVsExpenseChart transactions={state.transactions} />
-            </div>
-          </div>
-          
-          {/* Secondary stats */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-1">
-              <RecentTransactions 
-                transactions={sortedTransactions} 
-                categories={state.categories}
-              />
-            </div>
-            <div className="lg:col-span-1">
-              <ExpensesByCategoryChart 
-                transactions={state.transactions}
-                categories={state.categories}
-              />
-            </div>
-            <div className="lg:col-span-1">
-              <ExpensesByPieChart 
-                transactions={state.transactions}
-                categories={state.categories}
-              />
+              
+              {/* Additional charts in a grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                <ExpensesByCategoryChart 
+                  transactions={state.transactions}
+                  categories={state.categories}
+                />
+                <ExpensesByPieChart 
+                  transactions={state.transactions}
+                  categories={state.categories}
+                />
+              </div>
             </div>
           </div>
         </div>
