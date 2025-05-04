@@ -40,7 +40,7 @@ const initialState: AppState = {
   transactions: [],
   categories: [],
   isLoading: true,
-  darkMode: false,
+  darkMode: true,
 };
 
 // Create context
@@ -133,13 +133,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       dispatch({ type: 'SET_CATEGORIES', payload: defaultCategories });
     }
 
-    if (storedDarkMode) {
-      if (JSON.parse(storedDarkMode)) {
+    // Initialize dark mode from localStorage or default to true if not set
+    if (storedDarkMode !== null) {
+      const isDarkMode = JSON.parse(storedDarkMode);
+      if (isDarkMode) {
         document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
       }
-      dispatch({
-        type: 'TOGGLE_DARK_MODE',
-      });
+      if (isDarkMode !== state.darkMode) {
+        dispatch({ type: 'TOGGLE_DARK_MODE' });
+      }
+    } else {
+      // No stored preference, use default (dark mode)
+      document.documentElement.classList.add('dark');
     }
   }, []);
 
